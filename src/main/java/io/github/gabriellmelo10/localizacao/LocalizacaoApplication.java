@@ -16,39 +16,14 @@ public class LocalizacaoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//listarCidadesPorNomeIniciandoCom();
-		//listarCidadesPorNomeTerminandoCom();
-		listarCidadesPorNomeContendo();
+		listarCidadesPorNomeCom();
 	}
 
-	@Transactional
-	void salvarCidade(){
-		var cidade = new Cidade(1L, "São Paulo", 12396372l);
-		cidadeRepository.save(cidade);
-	}
-
-	void listarCidades(){
-		cidadeRepository.findAll().forEach(System.out::println);
-	}
-
-	void listarCidadesPorNome(){
-		cidadeRepository.findByNome("Porto Velho").forEach(System.out::println);
-	}
-
-	void listarCidadesPorNomeIniciandoCom(){
-		cidadeRepository.findByNomeStartingWith("Porto").forEach(System.out::println);
-	}
-
-	void listarCidadesPorNomeTerminandoCom(){
-		cidadeRepository.findByNomeEndingWith("a").forEach(System.out::println);
-	}
-
-	void listarCidadesPorNomeContendo(){
-		cidadeRepository.findByNomeContaining("a").forEach(System.out::println);
-	}
-
-	void listarCidadesPorHabitantes(){
-		cidadeRepository.findByHabitantes(78787900L).forEach(System.out::println);
+	void listarCidadesPorNomeCom(){
+		cidadeRepository.findByNomeLike("porto%").forEach(System.out::println);
+		//cidadeRepository.findByNomeLike("%a").forEach(System.out::println);
+		//cidadeRepository.findByNomeLike("a%").forEach(System.out::println);
+		//cidadeRepository.findByNomeLike("%a%").forEach(System.out::println);
 	}
 
 	public static void main(String[] args) {
