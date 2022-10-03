@@ -17,4 +17,6 @@ values
 	(8, 'Palmas', 78787900),
 	(9, 'Recife', 23234780),
 	(10, 'Natal', 789878979),
-	(11, 'Brasília', 12123132);
+	(11, 'Brasília', 12123132),
+	(12, 'Vitória', null),
+	(13, 'Curitiba', null);

@@ -8,8 +8,13 @@ import java.util.List;
 
 public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 
-    @Query(" select c from Cidade c where upper(c.nome) like upper(?1) ")
-    List<Cidade> findByNomeLike(String nome);
+    List<Cidade> findByHabitantes(Long habitantes);
 
-    //List<Cidade> findByNomeLike(String nome);
+    List<Cidade> findByHabitantesLessThan(Long habitantes);
+
+    List<Cidade> findByHabitantesGreaterThan(Long habitantes);
+
+    List<Cidade> findByHabitantesLessThanEqual(Long habitantes);
+
+    List<Cidade> findByHabitantesLessThanAndNomeLike(Long habitantes, String nome);
 }
