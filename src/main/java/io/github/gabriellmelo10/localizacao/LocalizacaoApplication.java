@@ -17,7 +17,10 @@ public class LocalizacaoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		cidadeService.findByNomeLikePaginado();
+		var cidade = new Cidade(null, "porto alegre", null);
+		cidadeService
+				.filtroDinamico(cidade)
+				.forEach(System.out::println);
 	}
 
 	public static void main(String[] args) {

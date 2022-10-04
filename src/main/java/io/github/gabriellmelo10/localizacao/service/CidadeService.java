@@ -2,9 +2,7 @@ package io.github.gabriellmelo10.localizacao.service;
 
 import io.github.gabriellmelo10.localizacao.domain.entity.Cidade;
 import io.github.gabriellmelo10.localizacao.domain.repository.CidadeRepository;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,5 +94,11 @@ public class CidadeService {
         cidadeRepository
                 .findByHabitantes(78787900L)
                 .forEach(System.out::println);
+    }
+
+    public List<Cidade> filtroDinamico(Cidade cidade){
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreCase();
+        Example<Cidade> example = Example.of(cidade, matcher);
+        return cidadeRepository.findAll(example);
     }
 }
