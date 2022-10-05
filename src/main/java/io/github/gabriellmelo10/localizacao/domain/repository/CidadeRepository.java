@@ -1,16 +1,24 @@
 package io.github.gabriellmelo10.localizacao.domain.repository;
 
 import io.github.gabriellmelo10.localizacao.domain.entity.Cidade;
+import io.github.gabriellmelo10.localizacao.domain.repository.projections.CidadeProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface CidadeRepository extends JpaRepository<Cidade, Long>, JpaSpecificationExecutor<Cidade> {
+
+    @Query(nativeQuery = true, value = "select * from tb_cidade as c where c.nome =:nome ")
+    List<Cidade> findByNomeSqlNativo(@Param("nome") String nome);
+
+    @Query(nativeQuery = true, value = "select id_cidade as id, nome from tb_cidade as c where c.nome =:nome ")
+    List<CidadeProjection> findByNomeSqlNativoProjection(@Param("nome") String nome);
 
     //busca pelo nome like ordenado
     @Query(" select c from Cidade c where upper(c.nome) like upper(?1) ")
