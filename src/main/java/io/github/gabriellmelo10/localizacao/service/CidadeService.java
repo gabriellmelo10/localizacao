@@ -7,6 +7,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -106,7 +107,29 @@ public class CidadeService {
 
     public void listarCidadesBySpec(){
         cidadeRepository
-                .findAll(nomeEqual("São Paulo").and(habitantesGreaterThan(1000)))
+                .findAll(nomeEqual("São Paulo").and(habitantesGreaterThan(1000L)))
+                .forEach(System.out::println);
+    }
+
+    public void listarCidadesSpecsFiltroDinamico(Cidade filtro){
+        Specification<Cidade> specs = Specification.where((root, query, cb) -> cb.conjunction());
+
+        //select * from cidade where 1 = 1
+
+        if(filtro.getId() != null){
+            specs = specs.and( idEqual(filtro.getId()) );
+        }
+
+        if(StringUtils.hasText(filtro.getNome())){
+            specs = specs.and( nomeLike(filtro.getNome()) );
+        }
+
+        if(filtro.getHabitantes() != null){
+            specs = specs.and( habitantesGreaterThan(filtro.getHabitantes()) );
+        }
+
+        cidadeRepository
+                .findAll(specs)
                 .forEach(System.out::println);
     }
 }
